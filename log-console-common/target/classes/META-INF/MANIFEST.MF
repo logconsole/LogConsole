@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: log-console-common
+Implementation-Version: 1.0.0
+Built-By: xiahongjian
+Implementation-Vendor-Id: org.logconsole
+Build-Jdk: 1.8.0_77
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/log-console/log-console-common
+Created-By: Maven Integration for Eclipse
+
