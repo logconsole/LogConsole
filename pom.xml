@@ -28,10 +28,7 @@
 		<fastjson.version>1.2.45</fastjson.version>
 	</properties>
 	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
+		
 	</dependencies>
 	<modules>
 		<module>log-console-common</module>
