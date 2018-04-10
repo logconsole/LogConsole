@@ -28,7 +28,11 @@
 		<fastjson.version>1.2.45</fastjson.version>
 	</properties>
 	<dependencies>
-		
+		<dependency>
+		    <groupId>junit</groupId>
+		    <artifactId>junit</artifactId>
+		    <scope>test</scope>
+		</dependency>
 	</dependencies>
 	<modules>
 		<module>log-console-common</module>
