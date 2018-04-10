@@ -27,7 +27,8 @@ public class Consumer {
 			Connection conn = factory.createConnection();
 			conn.start();
 			Session session = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
-			Destination dest = session.createTopic(MQAppenderConsts.TOPIC);
+//			Destination dest = session.createTopic(MQAppenderConsts.TOPIC);
+			Destination dest = session.createQueue(MQAppenderConsts.QUQUE);
 			MessageConsumer consumer = session.createConsumer(dest);
 			consumer.setMessageListener(message -> {
 				if (message instanceof ObjectMessage) {

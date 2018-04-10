@@ -6,5 +6,6 @@ package info.logconsole.appender;
  *
  */
 public interface MQAppenderConsts {
-	String TOPIC = "logConsole.appLogs";
+	String TOPIC = "logConsole.logTopic";
+	String QUQUE = "logConsole.logQueue";
 }

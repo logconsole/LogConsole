@@ -45,8 +45,8 @@ public abstract class LogbackMQAppenderBase extends UnsynchronizedAppenderBase<I
 		factory = new CachingConnectionFactory(poolConnectionFactory);
 		factory.setSessionCacheSize(sessionCacheSize);
 		jmsTemplate = new JmsTemplate(factory);
-		jmsTemplate.setPubSubDomain(true);
-		jmsTemplate.setDefaultDestinationName(MQAppenderConsts.TOPIC);
+		jmsTemplate.setPubSubDomain(false);
+		jmsTemplate.setDefaultDestinationName(MQAppenderConsts.QUQUE);
 		if (errors == 0)
 			super.start();
 	}
