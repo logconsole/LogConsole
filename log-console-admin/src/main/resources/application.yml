@@ -21,6 +21,8 @@ spring:
       max-file-size: 100MB
       max-request-size: 100MB
       enabled: true 
+  mvc:
+    static-path-pattern: /static/**
       
 #mybatis
 mybatis-plus:
@@ -54,7 +56,7 @@ mybatis-plus:
     call-setters-on-nulls: true
 #logging
 logging:
-    org.logconsole: debug
+    info.logconsole: debug
  # banner config
 banner:
   location: classpath:banner.txt #banner file location
