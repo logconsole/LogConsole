@@ -10,7 +10,8 @@ package info.logconsole.admin.mqreceiver;
 
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
-import info.logconsole.appender.model.LogMessage;
+
+import info.logconsole.appender.MQAppenderConsts;
 
 /**
  * ClassName:LogMQReceiver <br/>
@@ -21,10 +22,10 @@ import info.logconsole.appender.model.LogMessage;
 @Component
 public class LogMQReceiver {
 
-	@JmsListener(destination = "logTopic")
-	public void receiveMQLogMessage(LogMessage logMessage) {
+	@JmsListener(destination = MQAppenderConsts.TOPIC)
+	public void receiveMQLogMessage(String logMessage) {
 		
-		System.out.println("log message is ==> " + logMessage.getAppName() +  logMessage.getLog());
+		System.out.println("log message is ==> " + logMessage);
 		
 	}
 }

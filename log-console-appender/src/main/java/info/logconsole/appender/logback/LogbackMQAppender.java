@@ -1,7 +1,9 @@
 package info.logconsole.appender.logback;
 
 import javax.jms.JMSException;
-import javax.jms.ObjectMessage;
+import javax.jms.TextMessage;
+
+import com.alibaba.fastjson.JSONObject;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.status.ErrorStatus;
@@ -23,17 +25,18 @@ public class LogbackMQAppender extends LogbackMQAppenderBase {
 		}
 	}
 	
-	private ObjectMessage createMessage(ILoggingEvent event) {
+	private TextMessage createMessage(ILoggingEvent event) {
 		try {
-			ObjectMessage message = session.createObjectMessage();
+			TextMessage message = session.createTextMessage();
 			LogMessage logMessage = new LogMessage();
 			logMessage.setAppName(getAppName());
+			logMessage.setHost(getHost());
 			logMessage.setLevel(event.getLevel().toString());
 			logMessage.setTimestamp(System.currentTimeMillis());
 			logMessage.setLoggerName(event.getLoggerName());
 			logMessage.setThreadName(event.getThreadName());
-			logMessage.setLog(new String(getEncoder().encode(event)));
-			message.setObject(logMessage);
+			logMessage.setLog(event.getFormattedMessage());
+			message.setText(JSONObject.toJSONString(logMessage));;
 			return message;
 		} catch (JMSException e) {
 			addStatus(new ErrorStatus(e.getMessage(), this));

@@ -8,12 +8,13 @@
 package info.logconsole.appender.log4j;
 
 import javax.jms.JMSException;
-import javax.jms.ObjectMessage;
 import javax.jms.TextMessage;
 
 import org.apache.log4j.net.JMSAppender;
 import org.apache.log4j.spi.ErrorCode;
 import org.apache.log4j.spi.LoggingEvent;
+
+import com.alibaba.fastjson.JSONObject;
 
 import info.logconsole.appender.model.LogMessage;
 
@@ -38,7 +39,7 @@ public class Log4jMQAppender extends JMSAppender {
 		}
 
 		try {
-			ObjectMessage msg = this.getTopicSession().createObjectMessage();
+			TextMessage msg = this.getTopicSession().createTextMessage();
 			if (this.getLocationInfo()) {
 				event.getLocationInformation();
 			}
@@ -50,7 +51,7 @@ public class Log4jMQAppender extends JMSAppender {
 			logMessage.setLoggerName(event.getLoggerName());
 			logMessage.setThreadName(event.getThreadName());
 			logMessage.setLog(event.getMessage().toString());
-			msg.setObject(logMessage);
+			msg.setText(JSONObject.toJSONString(logMessage));
 			
 			this.getTopicPublisher().publish(msg);
 		} catch (JMSException e) {

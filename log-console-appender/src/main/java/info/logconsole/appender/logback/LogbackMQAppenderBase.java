@@ -26,9 +26,10 @@ public abstract class LogbackMQAppenderBase extends UnsynchronizedAppenderBase<I
 
 	private String appName = "NOT_SET";
 	private String topic = MQAppenderConsts.TOPIC;
-	private String username = ActiveMQConnection.DEFAULT_USER;
+	private String userName = ActiveMQConnection.DEFAULT_USER;
 	private String password = ActiveMQConnection.DEFAULT_PASSWORD;
 	private String brokerURL = ActiveMQConnection.DEFAULT_BROKER_URL;
+	private String host = "127.0.0.1";
 
 	protected ConnectionFactory factory;
 	protected Connection conn;
@@ -43,7 +44,7 @@ public abstract class LogbackMQAppenderBase extends UnsynchronizedAppenderBase<I
 			addStatus(new ErrorStatus("No encoder set for the appender named \"" + name + "\".", this));
 			errors++;
 		}
-		factory = new ActiveMQConnectionFactory(username, password, brokerURL);
+		factory = new ActiveMQConnectionFactory(userName, password, brokerURL);
 		try {
 			conn = factory.createConnection();
 			session = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
@@ -51,7 +52,7 @@ public abstract class LogbackMQAppenderBase extends UnsynchronizedAppenderBase<I
 			producer = session.createProducer(dest);
 			conn.start();
 		} catch (JMSException e) {
-			addStatus(new ErrorStatus("Failed to connect to mq using username:" + username + ", password:" + password
+			addStatus(new ErrorStatus("Failed to connect to mq using username:" + userName + ", password:" + password
 					+ ", brokderURL:" + brokerURL + " for appender named \"" + name + "\".", this));
 			errors++;
 		}
@@ -93,14 +94,6 @@ public abstract class LogbackMQAppenderBase extends UnsynchronizedAppenderBase<I
 		this.encoder = encoder;
 	}
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
 	public String getPassword() {
 		return password;
 	}
@@ -123,5 +116,21 @@ public abstract class LogbackMQAppenderBase extends UnsynchronizedAppenderBase<I
 
 	public void setTopic(String topic) {
 		this.topic = topic;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getHost() {
+		return host;
+	}
+
+	public void setHost(String host) {
+		this.host = host;
 	}
 }

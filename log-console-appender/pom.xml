@@ -10,18 +10,17 @@
 	<artifactId>log-console-appender</artifactId>
 
 	<properties>
-		<activemq.core.version>5.7.0</activemq.core.version>
-		<activemq.pool.version>5.13.2</activemq.pool.version>
+		<activemq.version>5.15.3</activemq.version>
 		<logback.version>1.2.3</logback.version>
 		<slf4j.version>1.7.25</slf4j.version>
-		<spring.jms.version>4.3.14.RELEASE</spring.jms.version>
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.activemq</groupId>
 			<artifactId>activemq-all</artifactId>
-			<version>5.15.3</version>
+			<version>${activemq.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
@@ -35,5 +34,11 @@
 			<version>${slf4j.version}</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>${fastjson.version}</version>
+		</dependency>
+
 	</dependencies>
 </project>
