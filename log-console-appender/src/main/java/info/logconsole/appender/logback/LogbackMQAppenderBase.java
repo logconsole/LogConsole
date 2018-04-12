@@ -1,10 +1,14 @@
 package info.logconsole.appender.logback;
 
+import javax.jms.Connection;
+import javax.jms.ConnectionFactory;
+import javax.jms.Destination;
+import javax.jms.JMSException;
+import javax.jms.MessageProducer;
+import javax.jms.Session;
+
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
-import org.apache.activemq.pool.PooledConnectionFactory;
-import org.springframework.jms.connection.CachingConnectionFactory;
-import org.springframework.jms.core.JmsTemplate;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.UnsynchronizedAppenderBase;
@@ -25,11 +29,12 @@ public abstract class LogbackMQAppenderBase extends UnsynchronizedAppenderBase<I
 	private String username = ActiveMQConnection.DEFAULT_USER;
 	private String password = ActiveMQConnection.DEFAULT_PASSWORD;
 	private String brokerURL = ActiveMQConnection.DEFAULT_BROKER_URL;
-	private int maxConnctions = 10;
-	private int sessionCacheSize = 2;
 
-	protected JmsTemplate jmsTemplate;
-	private CachingConnectionFactory factory;
+	protected ConnectionFactory factory;
+	protected Connection conn;
+	protected Session session;
+	protected Destination dest;
+	protected MessageProducer producer;
 
 	@Override
 	public void start() {
@@ -38,25 +43,39 @@ public abstract class LogbackMQAppenderBase extends UnsynchronizedAppenderBase<I
 			addStatus(new ErrorStatus("No encoder set for the appender named \"" + name + "\".", this));
 			errors++;
 		}
-		ActiveMQConnectionFactory activeMQConnectionFactory = new ActiveMQConnectionFactory(username, password,
-				brokerURL);
-		PooledConnectionFactory poolConnectionFactory = new PooledConnectionFactory(activeMQConnectionFactory);
-		poolConnectionFactory.setMaxConnections(maxConnctions);
-		factory = new CachingConnectionFactory(poolConnectionFactory);
-		factory.setSessionCacheSize(sessionCacheSize);
-		jmsTemplate = new JmsTemplate(factory);
-		jmsTemplate.setPubSubDomain(false);
-		jmsTemplate.setDefaultDestinationName(MQAppenderConsts.QUQUE);
+		factory = new ActiveMQConnectionFactory(username, password, brokerURL);
+		try {
+			conn = factory.createConnection();
+			session = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
+			dest = session.createTopic(topic);
+			producer = session.createProducer(dest);
+			conn.start();
+		} catch (JMSException e) {
+			addStatus(new ErrorStatus("Failed to connect to mq using username:" + username + ", password:" + password
+					+ ", brokderURL:" + brokerURL + " for appender named \"" + name + "\".", this));
+			errors++;
+		}
 		if (errors == 0)
 			super.start();
 	}
-	
+
 	@Override
 	public void stop() {
-		factory.destroy();
-		super.stop();
+		try {
+			if (producer != null)
+				producer.close();
+			if (session != null)
+				session.close();
+			if (conn != null)
+				conn.close();
+		} catch (JMSException e) {
+			addStatus(new ErrorStatus("Failed to close the mq connection for appender named \"" + name + "\".", this));
+		}
+		producer = null;
+		dest = null;
+		session = null;
+		conn = null;
 	}
-
 
 	public String getAppName() {
 		return appName;
@@ -96,14 +115,6 @@ public abstract class LogbackMQAppenderBase extends UnsynchronizedAppenderBase<I
 
 	public void setBrokerURL(String brokerURL) {
 		this.brokerURL = brokerURL;
-	}
-
-	public int getMaxConnctions() {
-		return maxConnctions;
-	}
-
-	public void setMaxConnctions(int maxConnctions) {
-		this.maxConnctions = maxConnctions;
 	}
 
 	public String getTopic() {
