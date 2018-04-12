@@ -10,6 +10,7 @@ package info.logconsole.admin.mqreceiver;
 
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
+import info.logconsole.appender.model.LogMessage;
 
 /**
  * ClassName:LogMQReceiver <br/>
@@ -21,9 +22,9 @@ import org.springframework.stereotype.Component;
 public class LogMQReceiver {
 
 	@JmsListener(destination = "logTopic")
-	public void receiveMQLogMessage(String logMessage) {
+	public void receiveMQLogMessage(LogMessage logMessage) {
 		
-		System.out.println("log message is ==> " + logMessage);
+		System.out.println("log message is ==> " + logMessage.getAppName() +  logMessage.getLog());
 		
 	}
 }

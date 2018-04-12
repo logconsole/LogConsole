@@ -38,7 +38,7 @@ public class Log4jMQAppender extends JMSAppender {
 		}
 
 		try {
-			TextMessage msg = this.getTopicSession().createTextMessage();
+			ObjectMessage msg = this.getTopicSession().createObjectMessage();
 			if (this.getLocationInfo()) {
 				event.getLocationInformation();
 			}
@@ -50,7 +50,7 @@ public class Log4jMQAppender extends JMSAppender {
 			logMessage.setLoggerName(event.getLoggerName());
 			logMessage.setThreadName(event.getThreadName());
 			logMessage.setLog(event.getMessage().toString());
-			msg.setText(logMessage.toString());
+			msg.setObject(logMessage);
 			
 			this.getTopicPublisher().publish(msg);
 		} catch (JMSException e) {
