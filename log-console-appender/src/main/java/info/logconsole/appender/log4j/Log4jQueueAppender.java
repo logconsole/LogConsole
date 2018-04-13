@@ -332,6 +332,7 @@ public class Log4jQueueAppender extends AppenderSkeleton {
 			logMessage.setTimestamp(System.currentTimeMillis());
 			logMessage.setLoggerName(event.getLoggerName());
 			logMessage.setThreadName(event.getThreadName());
+			logMessage.setClazz(event.getLoggerName());
 			logMessage.setLog(event.getMessage().toString());
 			msg.setText(JSONObject.toJSONString(logMessage));
 

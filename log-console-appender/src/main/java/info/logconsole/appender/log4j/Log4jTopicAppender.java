@@ -27,7 +27,7 @@ import info.logconsole.appender.model.LogMessage;
  * 
  * @author 丁后刚
  */
-public class Log4jMQAppender extends JMSAppender {
+public class Log4jTopicAppender extends JMSAppender {
 	/**
 	 * 系统名称  标识系统
 	 */
@@ -66,6 +66,7 @@ public class Log4jMQAppender extends JMSAppender {
 			logMessage.setTimestamp(event.getTimeStamp());
 			logMessage.setLoggerName(event.getLoggerName());
 			logMessage.setThreadName(event.getThreadName());
+			logMessage.setClazz(event.getLoggerName());
 			logMessage.setLog(event.getMessage().toString());
 			msg.setText(JSONObject.toJSONString(logMessage));
 			
