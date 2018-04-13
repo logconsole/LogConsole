@@ -22,7 +22,7 @@ public interface MQAppenderConsts {
 	String TOPIC = "logConsole.logTopic";
 	
 	/**
-	 * 默认jndi中topic绑定名称
+	 * 默认JNDI中topic绑定名称
 	 */
 	String DEFAULT_TOPIC_BINDING_NAME = "logTopic";
 	
@@ -32,12 +32,17 @@ public interface MQAppenderConsts {
 	String QUEUE = "logConsole.logQueue";
 	
 	/**
-	 * 默认jndi中queue绑定名称
+	 * 默认JNDI中queue的绑定名称
 	 */
 	String DEFAULT_QUEUE_BINDING_NAME = "logQueue";
 	
 	/**
-	 * 默认jndi中topic connection factory绑定名称
+	 * 默认JNDI中topic connection factory的绑定名称
 	 */
-	String DEFAULT_TOPIC_CONNECTION_FACTORY_BINDING_NAME = "ConnectionFactory";
+	String DEFAULT_TOPIC_CONNECTION_FACTORY_BINDING_NAME = "TopicConnectionFactory";
+	
+	/**
+	 * 默认JNDI中queue connection factory的绑定名称
+	 */
+	String DEFAULT_QUEUE_CONNECTION_FACTORY_BINDING_NAME = "QueueConnectionFactory";
 }

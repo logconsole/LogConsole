@@ -9,6 +9,7 @@ import javax.naming.NameNotFoundException;
 import javax.naming.NamingException;
 
 import ch.qos.logback.core.AppenderBase;
+import info.logconsole.appender.MQAppenderConsts;
 
 /**
  * @author xiahongjian
@@ -23,6 +24,14 @@ public abstract class LogbackJMSAppenderBase<E> extends AppenderBase<E> {
 	protected String providerURL;
 	protected String userName;
 	protected String password;
+	/**
+	 * 系统名称
+	 */
+	private String appName = MQAppenderConsts.DEFAULT_APP_NAME;
+	/**
+	 * 应用服务器host
+	 */
+	private String host = MQAppenderConsts.DEFAULT_HOST;
 
 	protected Object lookup(Context ctx, String name) throws NamingException {
 		try {
@@ -149,6 +158,22 @@ public abstract class LogbackJMSAppenderBase<E> extends AppenderBase<E> {
 	 */
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public String getAppName() {
+		return appName;
+	}
+
+	public void setAppName(String appName) {
+		this.appName = appName;
+	}
+
+	public String getHost() {
+		return host;
+	}
+
+	public void setHost(String host) {
+		this.host = host;
 	}
 
 }
