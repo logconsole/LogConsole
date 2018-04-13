@@ -5,7 +5,7 @@
  * Date:2018年4月12日下午2:34:16
  */
 
-package info.logconsole.appender.task;
+package info.logconsole.appender.test.log4j.task;
 
 import org.apache.log4j.Logger;
 

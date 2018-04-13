@@ -6,9 +6,9 @@
  * Copyright @ 2018- Young Man  All Rights Reserved.
  */
 
-package info.logconsole.appender.main;
+package info.logconsole.appender.test.log4j;
 
-import info.logconsole.appender.task.LogProducer;
+import info.logconsole.appender.test.log4j.task.LogProducer;
 
 /**
  * ClassName:Main <br/>
