@@ -64,7 +64,6 @@ public class LogbackMQAppender extends LogbackJMSTopicAppender {
 				logMessage.setLine(ste.getLineNumber());
 			}
 			message.setText(JSONObject.toJSONString(logMessage));
-			;
 			return message;
 		} catch (JMSException e) {
 			addStatus(new ErrorStatus(e.getMessage(), this));
