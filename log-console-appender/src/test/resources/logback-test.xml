@@ -27,12 +27,8 @@
         </encoder>
     </appender>
     
-    <appender name="mq" class="info.logconsole.appender.logback.LogbackMQAppender">
-    	<encoder>
-            <pattern>
-                %date{yyyy-MM-dd HH:mm:ss.SSS} %-5level[%thread]%logger{56}.%method:%L -%msg%n
-            </pattern>
-        </encoder>
+    <appender name="mq" class="info.logconsole.appender.logback.LogbackMQTopicAppender">
+    	
     </appender>
 
     <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
