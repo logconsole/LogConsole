@@ -30,7 +30,7 @@ spring:
           config:
             multi-statement-allow: true
   jms:
-    pub-sub-domain: true
+    pub-sub-domain: false
   activemq:
     pool:
       enabled: false
