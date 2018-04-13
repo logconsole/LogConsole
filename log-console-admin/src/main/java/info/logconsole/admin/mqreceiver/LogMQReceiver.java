@@ -34,9 +34,8 @@ public class LogMQReceiver {
 	@Resource
 	private LogRecordInfoMapper logRecordInfoMapper;
 
-	@JmsListener(destination = MQAppenderConsts.TOPIC)
+	@JmsListener(destination = MQAppenderConsts.QUEUE)
 	public void receiveMQLogMessage(String logMessage) {
-		
 		LogMessage logMsg = JSONObject.parseObject(logMessage, LogMessage.class);
 		
 		LogRecordInfo logRecordInfo = new LogRecordInfo();
