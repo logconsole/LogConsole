@@ -9,14 +9,11 @@ package info.logconsole.appender.log4j;
 
 import javax.jms.JMSException;
 import javax.jms.TextMessage;
-
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.log4j.net.JMSAppender;
 import org.apache.log4j.spi.ErrorCode;
 import org.apache.log4j.spi.LoggingEvent;
-
 import com.alibaba.fastjson.JSONObject;
-
 import info.logconsole.appender.MQAppenderConsts;
 import info.logconsole.appender.model.LogMessage;
 
