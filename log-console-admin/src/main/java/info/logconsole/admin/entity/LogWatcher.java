@@ -1,66 +1,67 @@
 package info.logconsole.admin.entity;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.List;
 
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 
-import info.logconsole.admin.entity.enums.LogLevel;
-
 /**
  * <p>
- * 日志信息
+ * 日志监控器
  * </p>
  *
  * @author hongjian.xia
- * @since 2018-06-20
+ * @since 2018-06-21
  */
-@TableName("log_record_info")
-public class LogRecordInfo implements Serializable {
+@TableName("log_watcher")
+public class LogWatcher implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 日志唯一标识 主键id
-     */
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
     /**
-     * 源系统唯一标识id
+     * 监控器名称，非空唯一
+     */
+    private String name;
+    /**
+     * 监控应用名称（支持正则表达式），多个使用’;’分隔
      */
     @TableField("app_name")
     private String appName;
-   /**
-    * 应用所部署的服务器
-    */
+    /**
+     * 监控主机（支持正则表达式），多个使用’;’分隔
+     */
     private String host;
     /**
-     * 日志打印时间
-     */
-    @TableField("log_time")
-    private LocalDateTime logTime;
-    /**
-     * 日志级别
+     * 监控日志级别，0->ERROR, 1->WARN, 2-INFO, 3->DEBUG, 4->TRACE, 5->ALL
      */
     @TableField("log_level")
-    private LogLevel logLevel;
+    private Integer logLevel;
     /**
-     * 日志输出类
+     * 需要监控的日志产生的类名（支持正则表达式），多个使用’;’分隔
      */
     private String clazz;
+    
+    private Boolean enable;
+    
     /**
-     * 日志内容
+     * 此日志监控器关联的通知器
      */
-    private String content;
-    /**
-     * 创建时间
-     */
-    @TableField("create_date")
-    private LocalDateTime createTime;
+    @TableField(exist = false)
+    private List<LogNotifer> notifers;
 
+
+    public List<LogNotifer> getNotifers() {
+        return notifers;
+    }
+
+    public void setNotifers(List<LogNotifer> notifers) {
+        this.notifers = notifers;
+    }
 
     public Integer getId() {
         return id;
@@ -68,6 +69,14 @@ public class LogRecordInfo implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getAppName() {
@@ -86,19 +95,11 @@ public class LogRecordInfo implements Serializable {
         this.host = host;
     }
 
-    public LocalDateTime getLogTime() {
-        return logTime;
-    }
-
-    public void setLogTime(LocalDateTime logTime) {
-        this.logTime = logTime;
-    }
-
-    public LogLevel getLogLevel() {
+    public Integer getLogLevel() {
         return logLevel;
     }
 
-    public void setLogLevel(LogLevel logLevel) {
+    public void setLogLevel(Integer logLevel) {
         this.logLevel = logLevel;
     }
 
@@ -109,34 +110,26 @@ public class LogRecordInfo implements Serializable {
     public void setClazz(String clazz) {
         this.clazz = clazz;
     }
+    
 
-    public String getContent() {
-        return content;
+    public Boolean getEnable() {
+        return enable;
     }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(LocalDateTime createDate) {
-        this.createTime = createDate;
+    public void setEnable(Boolean enable) {
+        this.enable = enable;
     }
 
     @Override
     public String toString() {
-        return "LogRecordInfo{" +
+        return "LogWatcher{" +
         ", id=" + id +
+        ", name=" + name +
         ", appName=" + appName +
         ", host=" + host +
-        ", logTime=" + logTime +
         ", logLevel=" + logLevel +
         ", clazz=" + clazz +
-        ", content=" + content +
-        ", createDate=" + createTime +
+        ", enable=" + enable + 
         "}";
     }
 }

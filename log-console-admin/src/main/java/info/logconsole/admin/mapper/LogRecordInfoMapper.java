@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  * </p>
  *
  * @author hongjian.xia
- * @since 2018-04-09
+ * @since 2018-06-20
  */
 public interface LogRecordInfoMapper extends BaseMapper<LogRecordInfo> {
 

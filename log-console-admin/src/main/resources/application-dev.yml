@@ -35,6 +35,6 @@ spring:
     pool:
       enabled: false
       max-connections: 50
-    broker-url: tcp://localhost:61616
+    broker-url: tcp://106.14.133.110:61616
     user: admin
     password: admin

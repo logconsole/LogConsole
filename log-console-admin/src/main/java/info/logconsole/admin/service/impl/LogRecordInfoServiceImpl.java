@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author hongjian.xia
- * @since 2018-04-09
+ * @since 2018-06-20
  */
 @Service
 public class LogRecordInfoServiceImpl extends ServiceImpl<LogRecordInfoMapper, LogRecordInfo> implements LogRecordInfoService {

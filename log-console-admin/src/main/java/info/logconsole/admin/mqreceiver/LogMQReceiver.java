@@ -11,14 +11,16 @@ package info.logconsole.admin.mqreceiver;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Date;
-import javax.annotation.Resource;
-import org.apache.commons.lang3.time.DateFormatUtils;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
+
 import com.alibaba.fastjson.JSONObject;
+
 import info.logconsole.admin.entity.LogRecordInfo;
-import info.logconsole.admin.mapper.LogRecordInfoMapper;
+import info.logconsole.admin.entity.enums.LogLevel;
+import info.logconsole.admin.service.LogRecordInfoService;
 import info.logconsole.appender.MQAppenderConsts;
 import info.logconsole.appender.model.LogMessage;
 
@@ -31,23 +33,23 @@ import info.logconsole.appender.model.LogMessage;
 @Component
 public class LogMQReceiver {
 	
-	@Resource
-	private LogRecordInfoMapper logRecordInfoMapper;
+	@Autowired
+	private LogRecordInfoService logRecordInfoService;
 
-	@JmsListener(destination = MQAppenderConsts.QUEUE)
+	@JmsListener(destination = MQAppenderConsts.TOPIC)
 	public void receiveMQLogMessage(String logMessage) {
 		LogMessage logMsg = JSONObject.parseObject(logMessage, LogMessage.class);
 		
 		LogRecordInfo logRecordInfo = new LogRecordInfo();
-		logRecordInfo.setSystemId(logMsg.getAppName());
+		logRecordInfo.setAppName(logMsg.getAppName());
 		logRecordInfo.setClazz(logMsg.getClazz());
-		logRecordInfo.setLogLevel(logMsg.getLevel());
-		logRecordInfo.setLogContent(logMsg.getLog());
-		logRecordInfo.setCreateDate(DateFormatUtils.format(new Date(), "yyyyMMddHHmmss"));
+		logRecordInfo.setLogLevel(LogLevel.of(logMsg.getLevel()));
+		logRecordInfo.setContent(logMsg.getLog());
+		logRecordInfo.setCreateTime(LocalDateTime.now());
 		logRecordInfo.setLogTime(LocalDateTime.ofInstant(Instant.ofEpochMilli(logMsg.getTimestamp()), 
 										ZoneId.systemDefault()));
 		
-		logRecordInfoMapper.insert(logRecordInfo);
+		logRecordInfoService.insert(logRecordInfo);
 	}
 }
 

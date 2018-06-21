@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="info.logconsole.admin.mapper.LogRecordInfoMapper">
+<mapper namespace="info.logconsole.admin.mapper.LogWatcherMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="info.logconsole.admin.entity.LogRecordInfo">
+    <resultMap id="BaseResultMap" type="info.logconsole.admin.entity.LogWatcher">
         <id column="id" property="id" />
+        <result column="name" property="name" />
         <result column="app_name" property="appName" />
         <result column="host" property="host" />
-        <result column="log_time" property="logTime" />
         <result column="log_level" property="logLevel" />
         <result column="clazz" property="clazz" />
-        <result column="content" property="content" />
-        <result column="create_date" property="createDate" />
+        <result column="enable" property="enable" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, app_name AS appName, host, log_time AS logTime, log_level AS logLevel, clazz, content, create_date AS createDate
+        id, name, app_name AS appName, host, log_level AS logLevel, clazz, enable
     </sql>
 
 </mapper>

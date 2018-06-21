@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="info.logconsole.admin.mapper.WatcherNotiferRelMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="info.logconsole.admin.entity.WatcherNotiferRel">
+        <id column="log_watcher_id" property="logWatcherId" />
+        <result column="log_notifer_id" property="logNotiferId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        log_watcher_id AS logWatcherId, log_notifer_id AS logNotiferId
+    </sql>
+
+</mapper>
