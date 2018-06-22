@@ -32,7 +32,7 @@ import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 public class MpGenerator {
     private static final String BASE_DIR = new File("./").getAbsolutePath();
     private static final String JAVA_FILES_OUTPUT_DIR = BASE_DIR + "/src/main/java";
-    private static final String XML_FILES_OUTPUT_DIR = BASE_DIR + "/src/main/resources/mapper/biz";
+    private static final String XML_FILES_OUTPUT_DIR = BASE_DIR + "/src/main/resources/mapper";
     private static final String DRIVER_CLASS = "com.mysql.jdbc.Driver";
     private static final String URL =
             "jdbc:mysql://127.0.0.1:3306/logconsole?characterEncoding=utf8";
@@ -127,8 +127,10 @@ public class MpGenerator {
 
         // 包配置
         PackageConfig pc = new PackageConfig();
-        pc.setParent(GROUP_ID);
-        pc.setModuleName(ARTIFACT_ID);
+        pc.setParent(GROUP_ID)
+            .setModuleName(ARTIFACT_ID)
+            .setController("controller")
+            .setEntity("enityt");
         mpg.setPackageInfo(pc);
 
         // 注入自定义配置，可以在 VM 中使用 cfg.abc 【可无】

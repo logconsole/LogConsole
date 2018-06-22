@@ -1,4 +1,4 @@
-package info.logconsole.admin.web;
+package info.logconsole.admin.controller;
 
 
 import java.util.List;

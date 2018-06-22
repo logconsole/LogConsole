@@ -9,6 +9,8 @@ import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.FieldFill;
 import com.baomidou.mybatisplus.enums.IdType;
 
+import info.logconsole.admin.entity.enums.NotiferType;
+
 /**
  * <p>
  * 日志监控通知器
@@ -31,7 +33,7 @@ public class LogNotifer implements Serializable {
     /**
      * 通知类型
      */
-    private Integer type;
+    private NotiferType type;
     /**
      * 通知的接收者，短信->手机号码，邮件->邮箱，多个使用’;’分隔
      */
@@ -91,11 +93,11 @@ public class LogNotifer implements Serializable {
         this.name = name;
     }
 
-    public Integer getType() {
+    public NotiferType getType() {
         return type;
     }
 
-    public void setType(Integer type) {
+    public void setType(NotiferType type) {
         this.type = type;
     }
 

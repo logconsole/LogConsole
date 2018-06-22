@@ -1,10 +1,12 @@
 package info.logconsole.admin.common.config;
 
-import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
-
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
+
+import info.logconsole.admin.entity.handler.CommonMetaObjectHandler;
 
 /**
  * ClassName: MybatisPlusConfig <br/>
@@ -26,4 +28,10 @@ public class MybatisPlusConfig {
     public PaginationInterceptor paginationInterceptor() {
         return new PaginationInterceptor();
     }
+    
+    @Bean
+    public CommonMetaObjectHandler commonMetaObjectHandler() {
+        return new CommonMetaObjectHandler();
+    }
+    
 }
