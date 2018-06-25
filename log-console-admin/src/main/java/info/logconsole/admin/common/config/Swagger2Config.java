@@ -21,7 +21,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 public class Swagger2Config implements WebMvcConfigurer {
-    private static final String BASE_PACKAGE = "info.logconsole.admin.web";
+    private static final String BASE_PACKAGE = "info.logconsole.admin.controller";
 
     // 解决由配置spring.mvc.static-path-pattern=/static/** 导致的swagger-ui.html找不到的问题
     @Override
@@ -40,9 +40,12 @@ public class Swagger2Config implements WebMvcConfigurer {
     }
 
     private ApiInfo apiInfo() {
-        return new ApiInfoBuilder().title("LonConsole API文档").description("swagger文档")
+        return new ApiInfoBuilder()
+                .title("LonConsole API文档")
+                .description("swagger文档")
                 .termsOfServiceUrl("www.logconsole.info")
-                .contact(new Contact("xiahongjian", "", "hongjian.xia@qq.com")).version("1.0.0")
+                .contact(new Contact("xiahongjian", "", "hongjian.xia@qq.com"))
+                .version("1.0.0")
                 .build();
     }
 }

@@ -22,7 +22,7 @@ import io.swagger.annotations.ApiOperation;
  * @author hongjian.xia
  * @since 2018-06-21
  */
-@Api("logwatcher相关api")
+@Api(tags = "logwatcher相关api")
 @Controller
 @RequestMapping("/admin/logWatcher")
 public class LogWatcherController {
@@ -30,7 +30,7 @@ public class LogWatcherController {
     @Autowired
     private LogWatcherService logWatcherService;
     
-    @ApiOperation(value = "获取所有日志监控器", response = LogWatcher.class, responseContainer = "List")
+    @ApiOperation(value = "获取所有启用的日志监控器", notes = "包含对应的日志通知器", response = LogWatcher.class, responseContainer = "List")
     @ResponseBody
     @GetMapping("/alll")
     public List<LogWatcher> getAllWatchers() {

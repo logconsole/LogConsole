@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +21,7 @@ import com.alibaba.fastjson.JSONObject;
 
 import info.logconsole.admin.entity.LogRecordInfo;
 import info.logconsole.admin.entity.enums.LogLevel;
+import info.logconsole.admin.event.events.LogReceivedEvent;
 import info.logconsole.admin.service.LogRecordInfoService;
 import info.logconsole.appender.MQAppenderConsts;
 import info.logconsole.appender.model.LogMessage;
@@ -33,6 +35,9 @@ import info.logconsole.appender.model.LogMessage;
 @Component
 public class LogMQReceiver {
 	
+    @Autowired
+    private ApplicationEventPublisher appEventPublisher;
+    
 	@Autowired
 	private LogRecordInfoService logRecordInfoService;
 
@@ -50,6 +55,7 @@ public class LogMQReceiver {
 										ZoneId.systemDefault()));
 		
 		logRecordInfoService.insert(logRecordInfo);
+		appEventPublisher.publishEvent(new LogReceivedEvent(LogReceivedEvent.NOTIFER_CHECK, logRecordInfo));
 	}
 }
 

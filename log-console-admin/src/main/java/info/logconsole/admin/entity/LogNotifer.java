@@ -2,12 +2,16 @@ package info.logconsole.admin.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Set;
+
+import org.apache.commons.lang3.StringUtils;
 
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.FieldFill;
 import com.baomidou.mybatisplus.enums.IdType;
+import com.google.common.collect.Sets;
 
 import info.logconsole.admin.entity.enums.NotiferType;
 
@@ -23,6 +27,8 @@ import info.logconsole.admin.entity.enums.NotiferType;
 public class LogNotifer implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
+    public static final char SPLITOR = ';';
 
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
@@ -38,6 +44,10 @@ public class LogNotifer implements Serializable {
      * 通知的接收者，短信->手机号码，邮件->邮箱，多个使用’;’分隔
      */
     private String receiver;
+    
+    @TableField(exist = false)
+    private Set<String> allReceivers;
+    
     /**
      * 通知内容模板
      */
@@ -189,5 +199,12 @@ public class LogNotifer implements Serializable {
         ", createTime=" + createTime +
         ", updateTime=" + updateTime +
         "}";
+    }
+    
+    public Set<String> getAllReceivers() {
+        if (allReceivers != null)
+            return allReceivers;
+        allReceivers = Sets.newHashSet(StringUtils.split(receiver, SPLITOR));
+        return allReceivers;
     }
 }
