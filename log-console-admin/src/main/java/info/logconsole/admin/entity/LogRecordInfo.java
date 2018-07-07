@@ -26,7 +26,7 @@ public class LogRecordInfo implements Serializable {
     /**
      * 日志唯一标识 主键id
      */
-    @TableId(value = "id", type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.ID_WORKER)
     private Integer id;
     /**
      * 源系统唯一标识id
