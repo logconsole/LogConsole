@@ -6,6 +6,8 @@ import java.util.Set;
 
 import javax.annotation.PostConstruct;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -27,11 +29,13 @@ import info.logconsole.admin.util.FreeMarkerUtils;
  */
 @Service
 public class NotificationSenderServiceImpl implements NotificationSenderService {
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(NotificationSenderServiceImpl.class);
+    
     @Autowired
     private MailConfig mailConfig;
-
     private JavaMailSender mailSender;
-
+    
     @PostConstruct
     public void init() {
         JavaMailSenderImpl sender = new JavaMailSenderImpl();
@@ -42,8 +46,12 @@ public class NotificationSenderServiceImpl implements NotificationSenderService 
         prop.put(MailConfig.KEY_AUTH, true);
         prop.put(MailConfig.KEY_PROTOCOL, "smtp");
         prop.put(MailConfig.KEY_TIMEOUT, "25000");
-        prop.put(MailConfig.KEY_USERNAME, mailConfig.getUsername());
-        prop.put(MailConfig.KEY_PASSWORD, mailConfig.getPassword());
+        if (mailConfig.getUsername() == null || mailConfig.getPassword() == null) {
+            LOGGER.warn("No mail config, place check config file.");
+        } else {
+            prop.put(MailConfig.KEY_USERNAME, mailConfig.getUsername());
+            prop.put(MailConfig.KEY_PASSWORD, mailConfig.getPassword());
+        }
         sender.setJavaMailProperties(prop);
     }
 
@@ -82,7 +90,5 @@ public class NotificationSenderServiceImpl implements NotificationSenderService 
         message.setFrom(mailConfig.getUsername());
         mailSender.send(message);
     }
-
-
 
 }

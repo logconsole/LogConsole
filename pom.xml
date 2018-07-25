@@ -38,7 +38,6 @@
 		</dependency>
 	</dependencies>
 	<modules>
-		<module>log-console-common</module>
 		<module>log-console-appender</module>
 		<module>log-console-admin</module>
 		<module>log-console-web</module>

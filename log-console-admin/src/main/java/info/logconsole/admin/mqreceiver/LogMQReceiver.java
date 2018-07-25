@@ -41,7 +41,7 @@ public class LogMQReceiver {
 	@Autowired
 	private LogRecordInfoService logRecordInfoService;
 
-	@JmsListener(destination = MQAppenderConsts.TOPIC)
+//	@JmsListener(destination = MQAppenderConsts.TOPIC)
 	public void receiveMQLogMessage(String logMessage) {
 		LogMessage logMsg = JSONObject.parseObject(logMessage, LogMessage.class);
 		

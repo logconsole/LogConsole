@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @time   2018-04-10 16:56:16
  *
  */
-@RestController
+@RestController("/admin")
 public class IndexController {
 	private static final Logger LOG = LoggerFactory.getLogger(IndexController.class);
 	
